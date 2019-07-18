@@ -30,6 +30,7 @@ def get_all_projects():
         res[k] = projects[k].config
     return res
 
+##def copylinks
 
 def analyze(analyze_request):
     project = analyze_request.get('project')
@@ -53,7 +54,8 @@ def analyze(analyze_request):
 
 @app.route('/')
 def redir():
-    return redirect('client/index.html')
+
+    return redirect('client/fun.html')
 
 
 @app.route('/client/<path:path>')

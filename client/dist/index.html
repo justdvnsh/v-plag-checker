@@ -1,4 +1,43 @@
+<body id="container" style="background-color:#16607C" >
+        <div id="header">
+                <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+                <meta charset="UTF-8">
+                <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+                <!-- jQuery -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                <!-- Semantic Main CSS -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+                <!-- Semantic Reset CSS -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/reset.min.css"/>
+                <!-- Semantic Menu CSS -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/menu.min.css"/>
+                <!-- Main Semantic JS  -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+                <!-- Custom CSS -->
+                <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+                <!-- Browser tab name -->
+                <title>{{ title }}</title>
+                <!-- Navbar -->
+                <div class="ui attached inverted menu">
+                    
+                    <div class="right menu">
+                 
+                           
+                            <div class="item">
+                                <a class="ui default button" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Dashboard</a>
+                            </div>
+                
+                    </div>
+                </div>
+        
+        </div>
+ 
+
+<br><br>
+<center>
 <!DOCTYPE html>
+
+
 <html lang="en">
 
 <head>
@@ -19,6 +58,8 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135666388-1"></script>
+
+
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -72,56 +113,144 @@
     <!--</div>-->
     <!--</div>-->
 
-
-    <div id="header">
-        <div id="headertext">
-            <span style="font-weight: bold;">G</span>iant <span style="font-weight: bold;">L</span>anguage model <span
-                style="font-weight: bold;">T</span>est <span style="font-weight: bold;">R</span>oom
-
-        </div>
-    </div>
-    <div id="loader" style="top:50px;opacity:1;transition-property: opacity; transition-duration: .5s;"> Loading...
-    </div>
-    <div class="main_frame" style="opacity:0;transition-property: opacity; transition-duration: 1s;">
+    <!DOCTYPE html>
 
         <div class="floating_content">
-            <div> The GLTR demo enables forensic inspection of the visual footprint of a
-                language model on input text to detect whether a text could be real or fake. It is a collaborative
-                effort between
-                <a href='http://hendrik.strobelt.com' target="_blank">Hendrik Strobelt</a>, <a
-                    href="https://scholar.harvard.edu/gehrmann/home" target="_blank">Sebastian Gehrmann</a>,
-                and <a href="http://nlp.seas.harvard.edu/rush.html" target="_blank">Alexander Rush</a> from the <a
-                    href="https://mitibmwatsonailab.mit.edu/" target="_blank" style="font-weight:700">MIT-IBM Watson AI
-                    lab</a>
-                and <a href="http://nlp.seas.harvard.edu/" target="_blank" style="font-weight:700">Harvard NLP</a>.
-            </div>
-            <p>Please read the detailed <a href='http://gltr.io'>intro about GLTR</a>.
-            </p>
-            <p>Each text is analyzed by how likely each word would be the predicted word given
-                the context to the left.
-                If the actual used word would be in the Top 10 predicted words the background is colored green, for Top
-                100 in yellow,
-                Top 1000 red, otherwise violet. Try some sample texts from below and see for yourself if you can spot
-                the
-                difference between machine generated text and human generated text or try your own. (Tip: hover over
-                the words for more detail) </p>
-            <p>
-                The histograms show some statistic about the text: Frac(p) describes the fraction of probability
-                for the actual word divided by the maximum probability of any word at this position.
-                The Top 10 entropy describes the entropy along the top 10 results for each word.
-            </p>
+            
+          
+            <div class='demo'style="font-weight:bold; color:white;">Upload your essay(s) here:</div>
+           <!-- <div class="demos"></div> -->
+<div class="test">
 
-            <h2>Test-Model: <span id="model_name"></span></h2>
-            <div class='demo' style="font-weight:bold;">Quick start - select a demo text:</div>
-            <div class="demos"></div>
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<!-- Change /upload-target to your upload address -->
+<form action="/upload-target" class="dropzone"></form>
+    <div id="loader" style="top:50px;opacity:1;transition-property: opacity; transition-duration: .5s;"> Loading...
+    </div>
+ 
+    
+
+</div>
+
 
             <!-- INPUT TEXT -->
             <!--        <div id="text-input">-->
-            <div style="padding-top: 10px;"><span class="demo">or </span>enter a text:</div>
+            <div style="padding-top: 10px; color:white;"><span class="demo">or </span>enter an essay:</div>
             <!--        <textarea id="test_text" rows="10" cols="80">The cat was playing in the garden.</textarea>-->
             <textarea id="test_text" style="width: 100%;height: 50px;">The cat was playing in the garden.</textarea>
             <br>
-            <button id="submit_text_btn"> analyze</button>
+            <button id="submit_text_btn"> Validate</button>
+            <script src="https://checkout.stripe.com/checkout.js"></script>
+
+<button id="customButton">Purchase</button>
+
+<script>
+
+
+var handler = StripeCheckout.configure({
+  key: 'XXXX',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  token: function(token) {
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+  }
+});
+
+document.getElementById('customButton').addEventListener('click', function(e) {
+
+    var node = document.getElementById('results'),
+
+htmlContent = node.innerHTML,
+// htmlContent = "Some <span class="foo">sample</span> text."
+
+textContent = node.textContent;
+console.log('hello')
+
+var x = document.getElementById("results").innerText;
+
+
+  // Open Checkout with further options:
+  handler.open({
+    name: 'EssayBrain',
+    description: 'Monthly Subscription',
+    amount: 20000
+  });
+  e.preventDefault();
+
+   document.getElementById('customButton').remove();
+    this.remove();
+
+
+});
+
+// Close Checkout on page navigation:
+window.addEventListener('popstate', function() {
+  handler.close();
+  document.getElementById('customButton').remove();
+document.getElementsByClassName("customButton")[0].disabled=true;
+
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://unpkg.com/@tensorflow-models/mobilenet"></script>
+
+<button id="customButton2">Grade</button>
+
+  <img id="img" crossOrigin src="https://i.imgur.com/JlUvsxa.jpg" width=1 height=1/>
+
+<script>
+  
+var test = document.getElementById('customButton2');
+
+
+
+test.onclick = function() {
+
+    
+  // Change this to div.childNodes to support multiple top-level nodes
+
+    var mylist = document.getElementById('customButton2');
+   mylist.insertAdjacentHTML('afterend', '<br><br><b><a style="color: white">Validity: 95% <br>Grade: 82%</a></b>');
+
+
+    const a = tf.data.array(1);
+    console.log(a)
+
+    let net;
+
+async function app() {
+  console.log('Loading mobilenet..');
+
+
+// net = await tf.loadLayersModel('model.json');
+
+  // // Load the model.
+  // net = await mobilenet.load();
+  // console.log('Sucessfully loaded model');
+
+  // Make a prediction through the model on our image.
+  const imgEl = document.getElementById('img');
+  const result = await net.classify(imgEl);
+  console.log(result);
+}
+
+app();
+}
+
+</script>
+
+
+    
+
+
+
+
+
+
             <div class="loadersmall" style="margin-left:1pt;display: none;"></div>
 
 
@@ -129,15 +258,15 @@
 
                 <div id="stats" style="text-align:center;">
                     <div style="display:inline-block;text-align: center">
-                        <div>top k count</div>
+                        <div style="color:white;"  >top k count</div>
                         <svg id="stats_top_k"></svg>
                     </div>
                     <div style="display:inline-block;text-align: center">
-                        <div>frac(p) histogram</div>
+                        <div style="color:white;" >frac(p) histogram</div>
                         <svg id="stats_frac"></svg>
                     </div>
                     <div style="display:inline-block;text-align: center">
-                        <div>top 10 entropy(p) histogram</div>
+                        <div style="color:white;" >top 10 entropy(p) histogram</div>
                         <svg id="stats_entropy"></svg>
                     </div>
                 </div>
@@ -149,8 +278,8 @@
                         <!-- <button id="mode_diff_p" class="btn_mode"> Diff P</button> -->
                         <button id="mode_frac_p" class="btn_mode"> Frac P</button>
                     </div>
-                    <div style="display: inline-block;">
-                        Colors (top k):
+                    <div style="display: inline-block; color: orange">
+                        Scores:
                         <div
                             style="width: 15px; height: 15px;background-color: #ADFF80; display: inline-block;position: relative; top:3px;">
                         </div>
@@ -171,6 +300,7 @@
                     <div id="results" style="margin-top: 10px;">
 
                     </div>
+                    
                 </div>
 
 
@@ -181,19 +311,7 @@
 
                 <!--        </div>-->
             </div>
-            <p style="width:100%;text-align: center;">
-                <a id="tweet_it"
-                    href="https://twitter.com/intent/tweet?text=Catch%20unicorns%20with%20GLTR(http://gltr.io/dist).&hashtags=GLTR,MITIBM,HarvardNLP">Tweet
-                    about GLTR</a>
-                <br>
-                <a href="https://mitibmwatsonailab.mit.edu/" target="_blank" style="font-weight:700">MIT-IBM Watson AI
-                    lab</a>
-                and <a href="http://nlp.seas.harvard.edu/" target="_blank" style="font-weight:700">Harvard NLP</a>
-                <br>
-                <br>
-                <img src="demo/mit_ibm_heart_black.png" height="100px;">
-
-            </p>
+         
         </div>
 
     </div>
@@ -212,6 +330,8 @@
 
 
     </div>
+
+
 
     <!--<div class="side_bar" >-->
 
@@ -272,5 +392,6 @@
     <script src="start.js"></script>
 
 </body>
+
 
 </html>
