@@ -138,66 +138,16 @@
             <!--        <div id="text-input">-->
             <div style="padding-top: 10px; color:white;"><span class="demo">or </span>enter an essay:</div>
             <!--        <textarea id="test_text" rows="10" cols="80">The cat was playing in the garden.</textarea>-->
-            <textarea id="test_text" style="width: 100%;height: 50px;">The cat was playing in the garden.</textarea>
+            <form action="/check-plag" method="POST">
+            <textarea id="test_text" name='text' style="width: 100%;height: 50px;">The cat was playing in the garden.</textarea>
             <br>
-            <button id="submit_text_btn"> Validate</button>
-            <script src="https://checkout.stripe.com/checkout.js"></script>
+            <button id='check-plag' class='submit' >Check-Plag</button>
+            </form>
 
-<button id="customButton">Purchase</button>
-
-<script>
-
-
-var handler = StripeCheckout.configure({
-  key: 'XXXX',
-  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-  locale: 'auto',
-  token: function(token) {
-    // You can access the token ID with `token.id`.
-    // Get the token ID to your server-side code for use.
-  }
-});
-
-document.getElementById('customButton').addEventListener('click', function(e) {
-
-    var node = document.getElementById('results'),
-
-htmlContent = node.innerHTML,
-// htmlContent = "Some <span class="foo">sample</span> text."
-
-textContent = node.textContent;
-console.log('hello')
-
-var x = document.getElementById("results").innerText;
-
-
-  // Open Checkout with further options:
-  handler.open({
-    name: 'EssayBrain',
-    description: 'Monthly Subscription',
-    amount: 20000
-  });
-  e.preventDefault();
-
-   document.getElementById('customButton').remove();
-    this.remove();
-
-
-});
-
-// Close Checkout on page navigation:
-window.addEventListener('popstate', function() {
-  handler.close();
-  document.getElementById('customButton').remove();
-document.getElementsByClassName("customButton")[0].disabled=true;
-
-});
-
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
     <script src="https://unpkg.com/@tensorflow-models/mobilenet"></script>
-
+<button id="submit_text_btn"> Validate</button>
 <button id="customButton2">Grade</button>
 
   <img id="img" crossOrigin src="https://i.imgur.com/JlUvsxa.jpg" width=1 height=1/>

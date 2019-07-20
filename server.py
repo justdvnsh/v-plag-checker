@@ -4,20 +4,26 @@ import argparse
 import connexion
 import os
 import yaml
-from flask import send_from_directory, redirect
+from flask import send_from_directory, redirect, request, render_template
 from flask_cors import CORS
-
+from copyleaks.copyleakscloud import CopyleaksCloud
+from copyleaks.product import Product
+from copyleaks.processoptions import ProcessOptions
 # from backend.Project import Project # TODO !!
 from backend import AVAILABLE_MODELS
+import time
 
-__author__ = 'Hendrik Strobelt, Sebastian Gehrmann'
+__author__ = 'Divyansh'
 
 CONFIG_FILE_NAME = 'lmf.yml'
 projects = {}
 
 app = connexion.App(__name__, debug=False)
 
+cloud = CopyleaksCloud(Product.Education, 'justdvnsh2208@gmail.com', 'cf6f8994-89bc-438b-a721-8ef3b912036f')
 
+options = ProcessOptions()
+options.setSandboxMode(True)  # Scan will not consume any credits and will return dummy results.
 class Project:
     def __init__(self, LM, config):
         self.config = config
@@ -51,7 +57,6 @@ def analyze(analyze_request):
 #  some non-logic routes
 #########################
 
-
 @app.route('/')
 def redir():
 
@@ -75,6 +80,11 @@ def send_data(path):
     """
     print('Got the data route for', path)
     return send_from_directory(args.dir, path)
+
+@app.route('/check-plag', methods=['POST'])
+def check_plag():
+    return 'You Entered: {}'.format(request.form['text'])   
+    
 
 
 # @app.route('/')
@@ -136,6 +146,34 @@ if __name__ == '__main__':
 
     if not args.no_cors:
         CORS(app.app, headers='Content-Type')
+
+    # cloud = CopyleaksCloud(Product.Education, 'justdvnsh2208@gmail.com', 'cf6f8994-89bc-438b-a721-8ef3b912036f')
+
+    # options = ProcessOptions()
+    # options.setSandboxMode(True)  # Scan will not consume any credits and will return dummy results.
+    # print("You've got %s Copyleaks %s API credits" % (cloud.getCredits(), cloud.getProduct()))
+    # process = cloud.createByText('Something To Worry', options)
+
+    # iscompleted = False
+    # while not iscompleted:
+    #     # Get process status
+    #     [iscompleted, percents] = process.isCompleted()
+    #     print ('%s%s%s%%' % ('#' * int(percents / 2), "-" * (50 - int(percents / 2)), percents))
+    #     if not iscompleted:
+    #         time.sleep(2)
+
+    # print ("Process Finished!")
+
+    # # Get the scan results
+    # results = process.getResults()
+    # print ('\nFound %s results...' % (len(results)))
+    # for result in results:
+    #     print('')
+    #     print('------------------------------------------------')
+    #     print(result)
+
+    # print("You've got %s Copyleaks %s API credits" % (cloud.getCredits(), cloud.getProduct()))
+        
 
     app.run(port=int(args.port), debug=not args.nodebug, host=args.address)
 else:
