@@ -12,6 +12,8 @@ from copyleaks.processoptions import ProcessOptions
 # from backend.Project import Project # TODO !!
 from backend import AVAILABLE_MODELS
 import time
+from ngram import find_similarity_n_grams
+import json
 
 __author__ = 'Divyansh'
 
@@ -19,6 +21,8 @@ CONFIG_FILE_NAME = 'lmf.yml'
 projects = {}
 
 app = connexion.App(__name__, debug=False)
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 cloud = CopyleaksCloud(Product.Education, 'justdvnsh2208@gmail.com', 'cf6f8994-89bc-438b-a721-8ef3b912036f')
 
@@ -81,9 +85,36 @@ def send_data(path):
     print('Got the data route for', path)
     return send_from_directory(args.dir, path)
 
+@app.route('/upload-target', methods=['POST'])
+def upload():
+    target = os.path.join(APP_ROOT, 'uploads/')
+    for file in request.files.getlist('file'):
+        filename = file.filename
+        print(filename)
+        dest = "/".join([target, filename])
+        file.save(dest)
+
+    return 'YOUR FILE HAS BEEN SAVED'        
+
 @app.route('/check-plag', methods=['POST'])
 def check_plag():
-    return 'You Entered: {}'.format(request.form['text'])   
+    text = request.form['area']
+    files_uploaded = []
+    data = {}
+    for _,_,files in os.walk('uploads'):
+        for file in files:
+            files_uploaded.append(file)
+
+
+    for i in range(len(files_uploaded)):
+        if i == len(files_uploaded) - 1:
+            break
+        else:
+            data['files_' + files_uploaded[0] + '_' + files_uploaded[i+1]] = find_similarity_n_grams(files_uploaded[0], files_uploaded[i+1])
+    
+    #result = 'The result is {}'.format(data)
+
+    return render_template('index.html', data=data)
     
 
 
