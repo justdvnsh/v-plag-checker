@@ -39,4 +39,4 @@ def cosineSim(text1,text2):
      vector2 = text_to_vector(text2)
      #print vector1,vector2	
      cosine = get_cosine(vector1, vector2)
-     return cosine
+     return round(cosine,2)*100
