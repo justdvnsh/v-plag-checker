@@ -15,7 +15,7 @@ Credits for the base repository go to [this](https://github.com/HendrikStrobelt/
 This is an ongoing, open source project. Please contribute, it will help all those that use the app. Make a PR for any of these bugs
 
 - ~Finish implementing  check for plagiarism using the grams as features~
-- Use the bing api to check for plag against internet
+- ~Use the google api to check for plag against internet~
 - ~Make the GPT-2 api available to calculate scores~
 - Create a more accurate version of a validation score that uses the N-Gram score + the GPT-2 real/fake score. Display it to the screen when computed.
 - Host the website online, for the app to use the API ( Google Compute Platform )
