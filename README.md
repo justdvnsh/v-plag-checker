@@ -1,32 +1,25 @@
-# Watch-Me-Build-an-Education-Startup
-This is the code for "Watch Me Build an Education Startup" by Siraj Raval on Youtube
+# V-PlagChecker
+
+The free online plagiarism checker , which not just checks for plagiarism online , but also checks for the Ai - generated plagiarism which is a new type of plagiarism . It automatically grades the assignments , essays or the thesis papers , along with a report of how you did . It also generates a small summary of the project .
 
 ## Overview 
 
-This is the code for [this](https://www.youtube.com/watch?v=7d1smRd-8aI) video on Youtube by Siraj Raval. It's the code for EssayBrain, a tool for teacher that automatically grades and validates essays. In order to validate essays, it uses the copyleaks API to check for plagiarism. It also uses a modified version of GPT-2 to detect the likelihood that the text was real or fake. Then it outputs a validation score using these 2 scores. In order to grade the essay, it uses a neural network model trained on the automatic essay grading dataset on Kaggle found here https://www.kaggle.com/c/asap-aes/data .Take this code and go build a profitable startup with it.
+It's the code for V-PlagChecker, a tool for teacher/students that automatically grades and validates essays/thesis papers. In order to validate essays, it uses the n-gram modekl  to check for plagiarism. It also uses a modified version of GPT-2 to detect the likelihood that the text was real or fake ( The AI generated plagiarism ). Then it outputs a validation score using these 2 scores. In order to grade the essay, it uses a neural network model trained on the automatic essay grading dataset on Kaggle found here https://www.kaggle.com/c/asap-aes/data .
 
 ## Credits
 
-Credits for the base repository go to [this](https://github.com/HendrikStrobelt/detecting-fake-text/) academic team. Credits for the other tools go to Google, Stripe, and OpenAI. I will also take ths opportunity to give thanks to all humans who perform selfless acts for others, in big ways and small. Thank you, please keep doing that.  
+Credits for the base repository go to [this](https://github.com/HendrikStrobelt/detecting-fake-text/) academic team. Credits for the other tools go to Google, OpenAI and NLTK. I will also take ths opportunity to give thanks to all humans who perform selfless acts for others, in big ways and small. Thank you, please keep doing that.  
 
 ## Call for Pull Requests
 
-This is an ongoing, open source project. Please contribute, it will help all those that watch the video. Make a PR for any of these bugs
+This is an ongoing, open source project. Please contribute, it will help all those that use the app. Make a PR for any of these bugs
 
-- Finish implementing the CopyLeaks API
+- Finish implementing the bing api to check for plagiarism using the grams as features
 - Create a more accurate version of a validation score that uses the CopyLeaks API score + the GPT-2 real/fake score. Display it to the screen when computed.
 - Fix the Tensorflow.js integration, such that its using a pretrained model on the Kaggle automatic essay scoring data, instead ot the default model its using right now. Display the score to the screen accordingly.
-- Redesign the app so it looks even more professional (UI elements)
-
-## Dependencies
-
-- Flask
-- GPT-2 model
-- D3.js
-- Stripe
-- Firebase
-- Copyleaks API
-- 
+- Host the website online, for the app to use the API
+- Make the app
+- Connect it to the api
 
 ## Quickstart
 
