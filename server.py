@@ -14,6 +14,13 @@ from backend.utils.ngram import find_similarity_n_grams
 import json
 from backend.utils.detect import detect
 from backend.utils.plag import plag_for_file, plag_for_text
+import docx2txt
+
+def docx_2_txt(file):
+    print(os.path.abspath(file))
+    text = docx2txt.process(file)
+    with open('{}.txt'.format(file.split('.')[0]), 'w') as fl:
+        fl.write(text)
 
 __author__ = 'Divyansh'
 
@@ -77,25 +84,37 @@ def check_plag():
     for _,_,files in os.walk('uploads'):
         for file in files:
             files_uploaded.append(file)
+    
+    print(files_uploaded)
 
+    path = os.path.abspath('uploads/')
+    
     if len(files_uploaded) > 0:
         if len(files_uploaded) > 1:
             for i in range(len(files_uploaded)):
                 if i == len(files_uploaded) - 1:
                     break
                 else:
+                    ## check if the the file is a doc file and the change the format
+                    if files_uploaded[i].split('.')[1] == 'docx':
+                        docx_2_txt(os.path.join(path, files_uploaded[i]))
+                        os.remove(os.path.join(path, '{}.docx'.format(files_uploaded[i].split('.')[0])))
                     ## checking the n-gram similarity
-                    data['files_' + files_uploaded[0] + '_' + files_uploaded[i+1]] = find_similarity_n_grams(files_uploaded[0], files_uploaded[i+1])
+                    data['files_' + files_uploaded[0] + '_' + files_uploaded[i+1]] = find_similarity_n_grams(os.path.join(path, '{}.txt'.format(files_uploaded[0].split('.')[0])), os.path.join(path, '{}.txt'.format(files_uploaded[i+1].split('.')[0])))
 
         ## Check the ngram similarity and the AI plagiaism
 
         for i in range(len(files_uploaded)):
-            data['file_ai_plag_' + files_uploaded[i]] = detect(file=files_uploaded[i])
-            #data['file_plag_' + files_uploaded[i]] = plag_for_file(files_uploaded[i])
+            if files_uploaded[i].split('.')[1] == 'docx':
+                print("ABSOLUTE PATH: - {}".format(os.path.join(path, files_uploaded[i])))
+                docx_2_txt(os.path.join(path, files_uploaded[i]))
+                os.remove(os.path.join(path, '{}.docx'.format(files_uploaded[i].split('.')[0])))
+            data['file_ai_plag_' + files_uploaded[i]] = detect(file=os.path.join(path, '{}.txt'.format(files_uploaded[i].split('.')[0])))
+            data['file_plag_' + files_uploaded[i]] = plag_for_file(os.path.join(path, '{}.txt'.format(files_uploaded[i].split('.')[0])))
     else:
         data[text] = text
         data['text_score_ai_plag'] = detect(text=text)
-        # data['text_score_plag'] = plag_for_text(text)
+        data['text_score_plag']= plag_for_text(text)
 
     for _,_,files in os.walk('uploads'):
         for file in files:

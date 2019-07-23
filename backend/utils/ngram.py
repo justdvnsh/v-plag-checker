@@ -16,9 +16,10 @@ def find_ngrams(text):
         # data.append(gram)
         str2 =' '.join(grams) 
         data.append(str2)
-        final2 = ', '.join(data)
+        # final2 = ', '.join(data)
 
     # print(data)
+    # print(final2)
     return data
 # find_ngrams('The cat was playing in the garden')    
 
@@ -98,10 +99,10 @@ def find_similarity_n_grams_in_text(text1, text2):
         list2.append(str2)
         final2 = ', '.join(list2)
 
-    # print(list1)
-    # print(list2)
+    print(list1)
+    print(list2)
     # print(cosineSim(final1, final2))
     # print(final2)
     return cosineSim(final1, final2)
 
-find_similarity_n_grams_in_text('The cat was playing in the garden', 'Halloween 2016')    
+# find_similarity_n_grams_in_text('The cat was playing in the garden', 'Halloween 2016')    

@@ -23,28 +23,33 @@ def plag_for_text(text):
 
         if 'items' in response:
             for items in response['items']:
-                score_title = find_similarity_n_grams_in_text(feature, items['title'])
-                score_snippet = find_similarity_n_grams_in_text(feature, items['snippet'])
-                avg_score = score_snippet + score_title / 2
+                if len(items['title']) > 0 and len(items['snippet']) > 0:
+                    score_title = find_similarity_n_grams_in_text(feature, items['title'])
+                    score_snippet = find_similarity_n_grams_in_text(feature, items['snippet'])
+                    avg_score = score_snippet + score_title / 2
 
-                print('AVG_SCORE: ',avg_score)
-                if avg_score > 0.0:
-                    data.append({
-                        'feature': feature,
-                        'title': items['title'],
-                        'similarity_with_title': score_title,
-                        'snippet': items['snippet'],
-                        'similarity_with_snippet': score_snippet,
-                        'average_score': avg_score,
-                        'url': items['link']
-                    })
-                print('####################################################\n')
+                    print('AVG_SCORE: ',avg_score)
+                    if avg_score > 0.0:
+                        data.append({
+                            'feature': feature,
+                            'title': items['title'],
+                            'similarity_with_title': score_title,
+                            'snippet': items['snippet'],
+                            'similarity_with_snippet': score_snippet,
+                            'average_score': avg_score,
+                            'url': items['link']
+                        })
+                    print('####################################################\n')
+                else:
+                    continue                    
         else:
             continue
 
-    final_score = [feature['average_score'] for feature in data]
+    final_score_data = [feature['average_score'] for feature in data]
 
-    return data, final_score        
+    final_score = sum(final_score_data) / len(final_score_data)
+
+    return final_score        
 
 # data, final_score = plag_for_text('The cat was playing in the garden')
 # print(len(data))
@@ -71,36 +76,40 @@ def plag_for_file(file):
 
         print(text_url_encoded)
 
-        response = requests.get('https://www.googleapis.com/customsearch/v1/siterestrict?key=AIzaSyBPRakZQjv780pIeU1w_v5m0so7AZHT7c0&cx=017168851564985857371:ocrlfzfoqwy&q={}'.format(text_url_encoded))
+        response = requests.get('https://www.googleapis.com/customsearch/v1/?key=AIzaSyBPRakZQjv780pIeU1w_v5m0so7AZHT7c0&cx=017168851564985857371:ocrlfzfoqwy&q={}'.format(text_url_encoded))
 
         response = json.loads(response.text)
 
         # print(response)
         if 'items' in response:
             for items in response['items']:
-                score_title = find_similarity_n_grams_in_text(feature, items['title'])
-                score_snippet = find_similarity_n_grams_in_text(feature, items['snippet'])
-                avg_score = score_snippet + score_title / 2
+                if len(items['title']) > 0 and len(items['snippet']) > 0:
+                    score_title = find_similarity_n_grams_in_text(feature, items['title'])
+                    score_snippet = find_similarity_n_grams_in_text(feature, items['snippet'])
+                    avg_score = score_snippet + score_title / 2
 
-                print('AVG_SCORE: ',avg_score)
-                if avg_score > 0.0:
-                    data.append({
-                        'feature': feature,
-                        'title': items['title'],
-                        'similarity_with_title': score_title,
-                        'snippet': items['snippet'],
-                        'similarity_with_snippet': score_snippet,
-                        'average_score': avg_score,
-                        'url': items['link']
-                    })
-                print('####################################################\n')
-
+                    print('AVG_SCORE: ',avg_score)
+                    if avg_score > 0.0:
+                        data.append({
+                            'feature': feature,
+                            'title': items['title'],
+                            'similarity_with_title': score_title,
+                            'snippet': items['snippet'],
+                            'similarity_with_snippet': score_snippet,
+                            'average_score': avg_score,
+                            'url': items['link']
+                        })
+                    print('####################################################\n')
+                else:
+                    continue
         else:
             continue
 
-    final_score = [feature['average_score'] for feature in data]
+    final_score_data = [feature['average_score'] for feature in data]
 
-    return data, final_score        
+    final_score = sum(final_score_data) / len(final_score_data)
+
+    return final_score        
 
 # data, final_score = plag_for_file('shake_1.txt')    
 # print(len(data))
