@@ -17,8 +17,8 @@ This is an ongoing, open source project. Please contribute, it will help all tho
 - ~Finish implementing  check for plagiarism using the grams as features~
 - ~Use the google api to check for plag against internet~
 - ~Make the GPT-2 api available to calculate scores~
-- Create a more accurate version of a validation score that uses the N-Gram score + the GPT-2 real/fake score. Display it to the screen when computed.
-- Host the website online, for the app to use the API ( Google Compute Platform )
+- ~Create a more accurate version of a validation score that uses the N-Gram score + the GPT-2 real/fake score. Display it to the screen when computed.~
+- Host the website online, for the app to use the API ( Google Compute Platform ) -> Needs a billing account ... I Dont have a credit or debit card :p
 - Design and Make the app
 - Connect it to the api
 - ~Host the frotend of the website on firebase~
