@@ -10,9 +10,10 @@ from flask_cors import CORS
 from backend import AVAILABLE_MODELS
 from backend.api import LM
 import time
-from ngram import find_similarity_n_grams
+from backend.utils.ngram import find_similarity_n_grams
 import json
-from detect import detect
+from backend.utils.detect import detect
+from backend.utils.plag import plag_for_file, plag_for_text
 
 __author__ = 'Divyansh'
 
@@ -27,37 +28,6 @@ class Project:
     def __init__(self, LM, config):
         self.config = config
         self.lm = LM()
-
-
-# # def get_all_projects():
-# #     res = {}
-# #     for k in projects.keys():
-# #         res[k] = projects[k].config
-# #     return res
-
-# # ##def copylinks
-
-# # def analyze(analyze_request):
-# #     project = analyze_request.get('project')
-# #     text = analyze_request.get('text')
-
-# #     res = {}
-# #     if project in projects:
-# #         p = projects[project] # type: Project
-# #         res = p.lm.check_probabilities(text, topk=20)
-
-# #     return {
-# #         "request": {'project': project, 'text': text},
-# #         "result": res
-# #     }
-
-# print(projects)
-
-# @app.route('/validate', methods=['POST'])
-# def validate():
-#     text = request.form['text']
-
-#     return "You Entered : {}".format(text)
 
 #########################
 #  some non-logic routes
@@ -103,36 +73,36 @@ def check_plag():
     text = request.form['area']
     files_uploaded = []
     data = {}
-    # lm = LM()
+
     for _,_,files in os.walk('uploads'):
         for file in files:
             files_uploaded.append(file)
 
     if len(files_uploaded) > 0:
-        for i in range(len(files_uploaded)):
-            if i == len(files_uploaded) - 1:
-                break
-            else:
-                ## checking the n-gram similarity
-                data['files_' + files_uploaded[0] + '_' + files_uploaded[i+1]] = find_similarity_n_grams(files_uploaded[0], files_uploaded[i+1])
+        if len(files_uploaded) > 1:
+            for i in range(len(files_uploaded)):
+                if i == len(files_uploaded) - 1:
+                    break
+                else:
+                    ## checking the n-gram similarity
+                    data['files_' + files_uploaded[0] + '_' + files_uploaded[i+1]] = find_similarity_n_grams(files_uploaded[0], files_uploaded[i+1])
+
+        ## Check the ngram similarity and the AI plagiaism
 
         for i in range(len(files_uploaded)):
-            data['file_' + files_uploaded[i]] = detect(file=files_uploaded[i])
+            data['file_ai_plag_' + files_uploaded[i]] = detect(file=files_uploaded[i])
+            #data['file_plag_' + files_uploaded[i]] = plag_for_file(files_uploaded[i])
     else:
         data[text] = text
-        data['text_score'] = detect(text=text)
+        data['text_score_ai_plag'] = detect(text=text)
+        # data['text_score_plag'] = plag_for_text(text)
 
     for _,_,files in os.walk('uploads'):
         for file in files:
             os.remove('uploads/' + file)    
-    #result = 'The result is {}'.format(data)
-    # payload = lm.check_probabilities(text)
-    # payload = payload['pred_topk'].apply(lambda x: x.slice(0, 10))
-    return render_template('result.html', data=data)
     
-
-# app.add_api('server.yaml')
-
+    return jsonify(data)
+    
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default='gpt-2-small')
 parser.add_argument("--nodebug", default=False)

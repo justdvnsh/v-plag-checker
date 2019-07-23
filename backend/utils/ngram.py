@@ -4,7 +4,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import string
 import re, math
 from collections import Counter
-from cosineSim import cosineSim
+from backend.utils.cosineSim import cosineSim
 from nltk.tokenize import word_tokenize
 
 def find_ngrams(text):

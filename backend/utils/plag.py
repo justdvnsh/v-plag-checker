@@ -2,7 +2,7 @@ import requests
 import json
 import urllib
 import re
-from ngram import find_similarity_n_grams_in_text, find_ngrams
+from backend.utils.ngram import find_similarity_n_grams_in_text, find_ngrams
 
 def plag_for_text(text):
 
@@ -102,11 +102,11 @@ def plag_for_file(file):
 
     return data, final_score        
 
-data, final_score = plag_for_file('shake_1.txt')    
-print(len(data))
-print(final_score)
+# data, final_score = plag_for_file('shake_1.txt')    
+# print(len(data))
+# print(final_score)
 
-plagiarizm = sum(final_score) / len(final_score)
-print(plagiarizm)
+# plagiarizm = sum(final_score) / len(final_score)
+# print(plagiarizm)
 
 # print(plag_for_file('shake_1.txt'))
